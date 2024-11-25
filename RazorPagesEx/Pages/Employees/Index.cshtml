@@ -1,0 +1,31 @@
+﻿@page
+@model RazorPagesEx.Pages.Employees.IndexModel
+@{
+    ViewData["Title"] = "Employees";
+}
+<h1>Employees</h1>
+<table class="table table-striped table-dark">
+    <thead>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Department</td>
+        <td>
+            Actions
+        </td>
+    </thead>
+    <tbody>
+        @{
+          foreach(var employee in Model.Employees){
+            <tr>
+              <td>@employee.Name</td>
+              <td>@employee.Email</td>
+              <td>@employee.Department</td>
+              <td>
+                <a class="btn-sm btn-primary" style="text-decoration:none;" asp-page="/Employees/Edit" asp-route-id="@employee.Id">Edit</a>
+                <a class="btn-sm btn-danger" style="text-decoration:none;" asp-page="/Employees/Delete" asp-route-id="@employee.Id">Delete</a>
+              </td>
+            </tr>
+          }
+        }
+    </tbody>
+</table>
