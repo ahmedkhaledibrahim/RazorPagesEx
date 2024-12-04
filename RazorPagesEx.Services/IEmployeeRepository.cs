@@ -6,5 +6,6 @@
         IEnumerable<Employee> GetAllEmployees();
         Employee GetEmployeeById(int Id);
         Employee UpdateEmployee(Employee employee);
+        Employee AddNewEmployee(Employee employee);
     }
 }

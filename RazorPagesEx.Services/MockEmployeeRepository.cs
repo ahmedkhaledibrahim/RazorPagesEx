@@ -67,6 +67,14 @@ namespace RazorPagesEx.Services
             ];
 
         }
+
+        public Employee AddNewEmployee(Employee employee)
+        {
+            employee.Id = employees.Max(e => e.Id) + 1;
+            employees.Add(employee);
+            return employee;
+        }
+
         public IEnumerable<Employee> GetAllEmployees()
         {
             return employees;
@@ -90,5 +98,7 @@ namespace RazorPagesEx.Services
             }
             return existingEmployee;
         }
+
+
     }
 }

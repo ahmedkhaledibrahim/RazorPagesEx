@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\editemployee.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\editemployee.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\editemployee.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RazorPagesEx.Models\RazorPagesEx.Models.csproj" />
     <ProjectReference Include="..\RazorPagesEx.Services\RazorPagesEx.Services.csproj" />
   </ItemGroup>

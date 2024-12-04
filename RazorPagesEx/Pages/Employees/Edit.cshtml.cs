@@ -7,8 +7,13 @@ namespace RazorPagesEx.Pages.Employees
 {
     public class EditModel : PageModel
     {
-        //[BindProperty]
-        public Employee Employee;
+        [BindProperty]
+        public Employee Employee { get; set; }
+
+        [BindProperty]
+        public bool Notify { get; set; }
+
+        public string Message { get; set; }
 
         private readonly IEmployeeRepository _employeeRepository;
 
@@ -16,25 +21,61 @@ namespace RazorPagesEx.Pages.Employees
         {
             _employeeRepository = employeeRepository;
         }
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int? id)
         {
-
-            Employee = _employeeRepository.GetEmployeeById(id);
-            if (Employee == null)
+            if (id != null && id > 0)
             {
-                return RedirectToPage("/Error");
+                Employee = _employeeRepository.GetEmployeeById(id ?? 0);
+                if (Employee == null)
+                {
+                    return RedirectToPage("/Error");
+                }
+                return Page();
             }
-            return Page();
+            else
+            {
+                Employee = new Employee();
+                return Page();
+            }
         }
 
         public IActionResult OnPost(Employee employee)
         {
-            if (employee == null)
+            if (ModelState.IsValid)
             {
-                return RedirectToPage("/Error");
+                if (employee == null)
+                {
+                    return RedirectToPage("/Error");
+                }
+                if (employee.Id == 0)
+                {
+                    _employeeRepository.AddNewEmployee(employee);
+                }
+                else
+                {
+                    _employeeRepository.UpdateEmployee(employee);
+                }
+                return Page();
+
             }
-            _employeeRepository.UpdateEmployee(employee);
-            return Page();
+            else
+            {
+                return Page();
+            }
+
+        }
+
+        public void OnPostNotificationPreferneces()
+        {
+            if (Notify)
+            {
+                Message = "Thanks for the notification";
+            }
+            else
+            {
+                Message = "You have turned off notifications";
+            }
+            Employee = _employeeRepository.GetEmployeeById(Employee.Id);
         }
     }
 }
